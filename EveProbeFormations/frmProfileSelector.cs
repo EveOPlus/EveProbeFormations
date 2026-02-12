@@ -9,6 +9,8 @@ namespace EveProbeFormations
 
         private void frmProfileSelector_Load(object sender, EventArgs e)
         {
+            MessageBox.Show("This software is provided \"as is,\" without warranties of any kind, disclaiming liability for damages, including negligence, resulting from its use.");
+
             txtPathToSettingsFolder.Text = Helper.TryToFindPathToDefaultSettings();
             if (!string.IsNullOrEmpty(txtPathToSettingsFolder.Text))
             {
