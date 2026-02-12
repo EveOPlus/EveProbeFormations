@@ -1,0 +1,67 @@
+namespace EveProbeFormations
+{
+    public partial class frmProfileSelector : Form
+    {
+        public frmProfileSelector()
+        {
+            InitializeComponent();
+        }
+
+        private void frmProfileSelector_Load(object sender, EventArgs e)
+        {
+            txtPathToSettingsFolder.Text = Helper.TryToFindPathToDefaultSettings();
+            if (!string.IsNullOrEmpty(txtPathToSettingsFolder.Text))
+            {
+                RefreshUserDatPaths();
+            }
+        }
+
+        private void btnRefreshSettingsPath_Click(object sender, EventArgs e)
+        {
+            RefreshUserDatPaths();
+        }
+
+        private void RefreshUserDatPaths()
+        {
+            listBoxUserDatPaths.Items.Clear();
+            var files = Helper.GetUserDatFiles(txtPathToSettingsFolder.Text);
+
+            foreach (var file in files)
+            {
+                listBoxUserDatPaths.Items.Add(file);
+            }
+        }
+
+        private void listBoxUserDatPaths_DoubleClick(object sender, EventArgs e)
+        {
+            var profilePath = listBoxUserDatPaths.SelectedItem?.ToString();
+            if (profilePath == null)
+            {
+                return;
+            }
+
+            var newForm = new frmProbeFormationSelector(profilePath);
+            newForm.Show();
+
+            newForm.FormClosed += (o, args) => { 
+                this.Enabled = true;
+                this.BringToFront();
+            };
+            this.Enabled = false;
+        }
+
+        private void btnSettingsFolderPicker_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    txtPathToSettingsFolder.Text = fbd.SelectedPath;
+                    RefreshUserDatPaths();
+                }
+            }
+        }
+    }
+}
