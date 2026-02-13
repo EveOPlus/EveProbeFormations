@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -58,16 +59,54 @@ namespace EveProbeFormations
         private void btnAddSegment_Click(object sender, EventArgs e)
         {
             if (UserProfileProcessor.FormationSegments.Count > 9)
-            { 
-                MessageBox.Show("You cannot have more than 10 formations in your profile. Hint: Modify one of the existing ones instead.");
+            {
+                MessageBox.Show("You cannot have more than 10 formations in your profile.");
                 return;
             }
 
-            var json = JsonConvert.SerializeObject(listBoxSavedFormations.SelectedItem);
-            var clone = JsonConvert.DeserializeObject<FormationSegment>(json);
+            var blob = Clipboard.GetText();
+            var importedFormation = Helper.ImportBlobCipher(blob);
 
-            UserProfileProcessor.FormationSegments.Add(clone);
+            UserProfileProcessor.FormationSegments.Add(importedFormation);
             UpdateListBox();
+
+            UserProfileProcessor.CleanUpOrder();
+            UserProfileProcessor.SaveToUserProfile();
+
+            MessageBox.Show("Formation saved!");
+            this.Close();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (UserProfileProcessor.FormationSegments.Count == 1)
+            {
+                MessageBox.Show("You must have at least one formation in your profile.");
+                return;
+            }
+
+            var selectedFormation = listBoxSavedFormations.SelectedItem;
+            if (selectedFormation == null)
+            {
+                return;
+            }
+
+            UserProfileProcessor.FormationSegments.Remove((FormationSegment)selectedFormation);
+            UpdateListBox();
+
+            UserProfileProcessor.CleanUpOrder();
+            UserProfileProcessor.SaveToUserProfile();
+
+            MessageBox.Show("Formation added!");
+            this.Close();
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            var selectedFormation = (FormationSegment)listBoxSavedFormations.SelectedItem;
+            Clipboard.SetText(Helper.GenerateExportBlob(selectedFormation));
+
+            MessageBox.Show("Formation copied to clipboard!");
         }
     }
 }

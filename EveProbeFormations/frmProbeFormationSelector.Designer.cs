@@ -31,6 +31,8 @@
             listBoxSavedFormations = new ListBox();
             lblProfilePath = new Label();
             btnAddSegment = new Button();
+            btnDelete = new Button();
+            btnExport = new Button();
             SuspendLayout();
             // 
             // listBoxSavedFormations
@@ -53,19 +55,41 @@
             // 
             // btnAddSegment
             // 
-            btnAddSegment.Location = new Point(112, 307);
+            btnAddSegment.Location = new Point(12, 333);
             btnAddSegment.Name = "btnAddSegment";
-            btnAddSegment.Size = new Size(56, 23);
+            btnAddSegment.Size = new Size(156, 23);
             btnAddSegment.TabIndex = 2;
-            btnAddSegment.Text = "Clone";
+            btnAddSegment.Text = "Import from Clipboard";
             btnAddSegment.UseVisualStyleBackColor = true;
             btnAddSegment.Click += btnAddSegment_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(12, 362);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(156, 23);
+            btnDelete.TabIndex = 3;
+            btnDelete.Text = "Delete Selected";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            // 
+            // btnExport
+            // 
+            btnExport.Location = new Point(12, 304);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(156, 23);
+            btnExport.TabIndex = 4;
+            btnExport.Text = "Export to Clipboard";
+            btnExport.UseVisualStyleBackColor = true;
+            btnExport.Click += btnExport_Click;
             // 
             // frmProbeFormationSelector
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(182, 338);
+            ClientSize = new Size(182, 397);
+            Controls.Add(btnExport);
+            Controls.Add(btnDelete);
             Controls.Add(btnAddSegment);
             Controls.Add(lblProfilePath);
             Controls.Add(listBoxSavedFormations);
@@ -80,5 +104,7 @@
         private ListBox listBoxSavedFormations;
         private Label lblProfilePath;
         private Button btnAddSegment;
+        private Button btnDelete;
+        private Button btnExport;
     }
 }

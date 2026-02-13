@@ -67,28 +67,36 @@ namespace EveProbeFormations
                 var textBoxForNormalVect = $"txtNormalVect{formNameCounter}";
                 formNameCounter++;
 
-                Control[] txtX = this.Controls.Find(textBoxForX, true);
-                txtX[0].Text = probe.X.ToString();
+                TextBox txtX = (TextBox)(Controls.Find(textBoxForX, true)[0]);
+                txtX.Text = probe.X.ToString();
 
-                Control[] txtY = this.Controls.Find(textBoxForY, true);
-                txtY[0].Text = probe.Y.ToString();
+                TextBox txtY = (TextBox)(Controls.Find(textBoxForY, true)[0]);
+                txtY.Text = probe.Y.ToString();
 
-                Control[] txtZ = this.Controls.Find(textBoxForZ, true);
-                txtZ[0].Text = probe.Z.ToString();
+                TextBox txtZ = (TextBox)(Controls.Find(textBoxForZ, true)[0]);
+                txtZ.Text = probe.Z.ToString();
 
-                Control[] txtSize = this.Controls.Find(textBoxForSize, true);
-                txtSize[0].Text = probe.DiameterAu.ToString();
+                TextBox txtSize = (TextBox)(Controls.Find(textBoxForSize, true)[0]);
+                txtSize.Text = probe.DiameterAu.ToString();
 
-                Control[] txtDistance = this.Controls.Find(textBoxForDistance, true);
-                Control[] txtLat = this.Controls.Find(textBoxForLat, true);
-                Control[] txtLong = this.Controls.Find(textBoxForLong, true);
-                Control[] txtNormalVect = this.Controls.Find(textBoxForNormalVect, true);
+                TextBox txtDistance = (TextBox)(Controls.Find(textBoxForDistance, true)[0]);
+                TextBox txtLat = (TextBox)(Controls.Find(textBoxForLat, true)[0]);
+                TextBox txtLong = (TextBox)(Controls.Find(textBoxForLong, true)[0]);
+                TextBox txtNormalVect = (TextBox)(Controls.Find(textBoxForNormalVect, true)[0]);
 
-                ProbeValueChanged += () => UpdateProbeCalculations(probe, txtDistance[0], txtLat[0], txtLong[0], txtNormalVect[0]);
-
-                txtX[0].LostFocus += (s, e) =>
+                if (Helper.RunningInUnlockedMode)
                 {
-                    if (double.TryParse(txtX[0].Text, out double newX))
+                    txtX.ReadOnly = false;
+                    txtY.ReadOnly = false;
+                    txtZ.ReadOnly = false;
+                    txtSize.ReadOnly = false;
+                }
+
+                ProbeValueChanged += () => UpdateProbeCalculations(probe, txtDistance, txtLat, txtLong, txtNormalVect);
+
+                txtX.LostFocus += (s, e) =>
+                {
+                    if (double.TryParse(txtX.Text, out double newX))
                     {
                         probe.X = newX;
                     }
@@ -96,9 +104,9 @@ namespace EveProbeFormations
                     ProbeValueChanged();
                 };
 
-                txtY[0].LostFocus += (s, e) =>
+                txtY.LostFocus += (s, e) =>
                 {
-                    if (double.TryParse(txtY[0].Text, out double newY))
+                    if (double.TryParse(txtY.Text, out double newY))
                     {
                         probe.Y = newY;
                     }
@@ -106,9 +114,9 @@ namespace EveProbeFormations
                     ProbeValueChanged();
                 };
 
-                txtZ[0].LostFocus += (s, e) =>
+                txtZ.LostFocus += (s, e) =>
                 {
-                    if (double.TryParse(txtZ[0].Text, out double newZ))
+                    if (double.TryParse(txtZ.Text, out double newZ))
                     {
                         probe.Z = newZ;
                     }
@@ -116,9 +124,9 @@ namespace EveProbeFormations
                     ProbeValueChanged();
                 };
 
-                txtSize[0].LostFocus += (s, e) =>
+                txtSize.LostFocus += (s, e) =>
                 {
-                    if (double.TryParse(txtSize[0].Text, out double newSize))
+                    if (double.TryParse(txtSize.Text, out double newSize))
                     {
                         probe.DiameterAu = newSize;
                     }
@@ -148,20 +156,15 @@ namespace EveProbeFormations
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            var cloneJson = JsonConvert.SerializeObject(SelectedFormation, Formatting.Indented);
-            var clone = JsonConvert.DeserializeObject<FormationSegment>(cloneJson);
-            clone?.Probes.RemoveAll(p => !p.IsValid);
-
-            var json = JsonConvert.SerializeObject(clone, Formatting.Indented);
-            Clipboard.SetText(json);
+            Clipboard.SetText(Helper.GenerateExportBlob(SelectedFormation));
 
             MessageBox.Show("Formation copied to clipboard!");
         }
 
         private void btnImport_Click(object sender, EventArgs e)
         {
-            var json = Clipboard.GetText();
-            var importedFormation = JsonConvert.DeserializeObject<FormationSegment>(json);
+            var blob = Clipboard.GetText();
+            var importedFormation = Helper.ImportBlobCipher(blob);
 
             if (importedFormation == null)
             {
@@ -245,7 +248,7 @@ namespace EveProbeFormations
             txtLong.Text = longtitude.ToString("0.#");
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnReorigin_Click(object sender, EventArgs e)
         {
             var validProbes = SelectedFormation.Probes.FindAll(p => p.IsValid);
             foreach (var probe in validProbes)
@@ -256,6 +259,16 @@ namespace EveProbeFormations
             }
 
             LoadSelectedFormationToForm();
+        }
+
+        private void frmFormationEditor_Load(object sender, EventArgs e)
+        {
+            if (Helper.RunningInUnlockedMode)
+            {
+                groupBoxVectors.Text = "Editable";
+                btnReorigin.Enabled = true;
+                btnReorigin.Visible = true;
+            }
         }
     }
 }

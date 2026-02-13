@@ -115,8 +115,8 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            groupBox1 = new GroupBox();
-            button2 = new Button();
+            groupBoxVectors = new GroupBox();
+            btnReorigin = new Button();
             groupBox6 = new GroupBox();
             toolTip = new ToolTip(components);
             panel1.SuspendLayout();
@@ -128,7 +128,7 @@
             groupBox3.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox5.SuspendLayout();
-            groupBox1.SuspendLayout();
+            groupBoxVectors.SuspendLayout();
             groupBox6.SuspendLayout();
             SuspendLayout();
             // 
@@ -203,6 +203,7 @@
             // 
             txtSize8.Location = new Point(5, 227);
             txtSize8.Name = "txtSize8";
+            txtSize8.ReadOnly = true;
             txtSize8.Size = new Size(100, 23);
             txtSize8.TabIndex = 31;
             // 
@@ -210,6 +211,7 @@
             // 
             txtSize1.Location = new Point(6, 24);
             txtSize1.Name = "txtSize1";
+            txtSize1.ReadOnly = true;
             txtSize1.Size = new Size(100, 23);
             txtSize1.TabIndex = 24;
             // 
@@ -217,6 +219,7 @@
             // 
             txtSize4.Location = new Point(5, 111);
             txtSize4.Name = "txtSize4";
+            txtSize4.ReadOnly = true;
             txtSize4.Size = new Size(100, 23);
             txtSize4.TabIndex = 27;
             // 
@@ -224,6 +227,7 @@
             // 
             txtSize7.Location = new Point(5, 198);
             txtSize7.Name = "txtSize7";
+            txtSize7.ReadOnly = true;
             txtSize7.Size = new Size(100, 23);
             txtSize7.TabIndex = 30;
             // 
@@ -231,6 +235,7 @@
             // 
             txtSize5.Location = new Point(5, 140);
             txtSize5.Name = "txtSize5";
+            txtSize5.ReadOnly = true;
             txtSize5.Size = new Size(100, 23);
             txtSize5.TabIndex = 28;
             // 
@@ -238,6 +243,7 @@
             // 
             txtSize2.Location = new Point(5, 53);
             txtSize2.Name = "txtSize2";
+            txtSize2.ReadOnly = true;
             txtSize2.Size = new Size(100, 23);
             txtSize2.TabIndex = 25;
             // 
@@ -245,6 +251,7 @@
             // 
             txtSize3.Location = new Point(5, 82);
             txtSize3.Name = "txtSize3";
+            txtSize3.ReadOnly = true;
             txtSize3.Size = new Size(100, 23);
             txtSize3.TabIndex = 26;
             // 
@@ -252,6 +259,7 @@
             // 
             txtSize6.Location = new Point(5, 169);
             txtSize6.Name = "txtSize6";
+            txtSize6.ReadOnly = true;
             txtSize6.Size = new Size(100, 23);
             txtSize6.TabIndex = 29;
             // 
@@ -276,6 +284,7 @@
             // 
             txtZ8.Location = new Point(5, 227);
             txtZ8.Name = "txtZ8";
+            txtZ8.ReadOnly = true;
             txtZ8.Size = new Size(100, 23);
             txtZ8.TabIndex = 23;
             // 
@@ -283,6 +292,7 @@
             // 
             txtZ1.Location = new Point(6, 24);
             txtZ1.Name = "txtZ1";
+            txtZ1.ReadOnly = true;
             txtZ1.Size = new Size(100, 23);
             txtZ1.TabIndex = 16;
             // 
@@ -290,6 +300,7 @@
             // 
             txtZ7.Location = new Point(5, 198);
             txtZ7.Name = "txtZ7";
+            txtZ7.ReadOnly = true;
             txtZ7.Size = new Size(100, 23);
             txtZ7.TabIndex = 22;
             // 
@@ -297,6 +308,7 @@
             // 
             txtZ2.Location = new Point(5, 53);
             txtZ2.Name = "txtZ2";
+            txtZ2.ReadOnly = true;
             txtZ2.Size = new Size(100, 23);
             txtZ2.TabIndex = 17;
             // 
@@ -304,6 +316,7 @@
             // 
             txtZ6.Location = new Point(5, 169);
             txtZ6.Name = "txtZ6";
+            txtZ6.ReadOnly = true;
             txtZ6.Size = new Size(100, 23);
             txtZ6.TabIndex = 21;
             // 
@@ -311,6 +324,7 @@
             // 
             txtZ3.Location = new Point(5, 82);
             txtZ3.Name = "txtZ3";
+            txtZ3.ReadOnly = true;
             txtZ3.Size = new Size(100, 23);
             txtZ3.TabIndex = 18;
             // 
@@ -318,6 +332,7 @@
             // 
             txtZ5.Location = new Point(5, 140);
             txtZ5.Name = "txtZ5";
+            txtZ5.ReadOnly = true;
             txtZ5.Size = new Size(100, 23);
             txtZ5.TabIndex = 20;
             // 
@@ -325,6 +340,7 @@
             // 
             txtZ4.Location = new Point(5, 111);
             txtZ4.Name = "txtZ4";
+            txtZ4.ReadOnly = true;
             txtZ4.Size = new Size(100, 23);
             txtZ4.TabIndex = 19;
             // 
@@ -349,6 +365,7 @@
             // 
             txtY8.Location = new Point(5, 227);
             txtY8.Name = "txtY8";
+            txtY8.ReadOnly = true;
             txtY8.Size = new Size(100, 23);
             txtY8.TabIndex = 15;
             // 
@@ -356,6 +373,7 @@
             // 
             txtY1.Location = new Point(6, 24);
             txtY1.Name = "txtY1";
+            txtY1.ReadOnly = true;
             txtY1.Size = new Size(100, 23);
             txtY1.TabIndex = 8;
             // 
@@ -363,6 +381,7 @@
             // 
             txtY7.Location = new Point(5, 198);
             txtY7.Name = "txtY7";
+            txtY7.ReadOnly = true;
             txtY7.Size = new Size(100, 23);
             txtY7.TabIndex = 14;
             // 
@@ -370,6 +389,7 @@
             // 
             txtY2.Location = new Point(5, 53);
             txtY2.Name = "txtY2";
+            txtY2.ReadOnly = true;
             txtY2.Size = new Size(100, 23);
             txtY2.TabIndex = 9;
             // 
@@ -377,6 +397,7 @@
             // 
             txtY6.Location = new Point(5, 169);
             txtY6.Name = "txtY6";
+            txtY6.ReadOnly = true;
             txtY6.Size = new Size(100, 23);
             txtY6.TabIndex = 13;
             // 
@@ -384,6 +405,7 @@
             // 
             txtY3.Location = new Point(5, 82);
             txtY3.Name = "txtY3";
+            txtY3.ReadOnly = true;
             txtY3.Size = new Size(100, 23);
             txtY3.TabIndex = 10;
             // 
@@ -391,6 +413,7 @@
             // 
             txtY5.Location = new Point(5, 140);
             txtY5.Name = "txtY5";
+            txtY5.ReadOnly = true;
             txtY5.Size = new Size(100, 23);
             txtY5.TabIndex = 12;
             // 
@@ -398,6 +421,7 @@
             // 
             txtY4.Location = new Point(5, 111);
             txtY4.Name = "txtY4";
+            txtY4.ReadOnly = true;
             txtY4.Size = new Size(100, 23);
             txtY4.TabIndex = 11;
             // 
@@ -422,6 +446,7 @@
             // 
             txtX8.Location = new Point(6, 227);
             txtX8.Name = "txtX8";
+            txtX8.ReadOnly = true;
             txtX8.Size = new Size(100, 23);
             txtX8.TabIndex = 7;
             // 
@@ -429,6 +454,7 @@
             // 
             txtX7.Location = new Point(6, 198);
             txtX7.Name = "txtX7";
+            txtX7.ReadOnly = true;
             txtX7.Size = new Size(100, 23);
             txtX7.TabIndex = 6;
             // 
@@ -436,6 +462,7 @@
             // 
             txtX6.Location = new Point(6, 169);
             txtX6.Name = "txtX6";
+            txtX6.ReadOnly = true;
             txtX6.Size = new Size(100, 23);
             txtX6.TabIndex = 5;
             // 
@@ -443,6 +470,7 @@
             // 
             txtX5.Location = new Point(6, 140);
             txtX5.Name = "txtX5";
+            txtX5.ReadOnly = true;
             txtX5.Size = new Size(100, 23);
             txtX5.TabIndex = 4;
             // 
@@ -450,6 +478,7 @@
             // 
             txtX4.Location = new Point(6, 111);
             txtX4.Name = "txtX4";
+            txtX4.ReadOnly = true;
             txtX4.Size = new Size(100, 23);
             txtX4.TabIndex = 3;
             // 
@@ -457,6 +486,7 @@
             // 
             txtX3.Location = new Point(6, 82);
             txtX3.Name = "txtX3";
+            txtX3.ReadOnly = true;
             txtX3.Size = new Size(100, 23);
             txtX3.TabIndex = 2;
             // 
@@ -464,6 +494,7 @@
             // 
             txtX2.Location = new Point(6, 53);
             txtX2.Name = "txtX2";
+            txtX2.ReadOnly = true;
             txtX2.Size = new Size(100, 23);
             txtX2.TabIndex = 1;
             // 
@@ -471,6 +502,7 @@
             // 
             txtX1.Location = new Point(7, 24);
             txtX1.Name = "txtX1";
+            txtX1.ReadOnly = true;
             txtX1.Size = new Size(100, 23);
             txtX1.TabIndex = 0;
             // 
@@ -724,7 +756,7 @@
             btnExport.Size = new Size(93, 23);
             btnExport.TabIndex = 10;
             btnExport.Text = "Export to Clip";
-            toolTip.SetToolTip(btnExport, "Export this Probe Formation as JSON so it can be shared and imported into another profile.");
+            toolTip.SetToolTip(btnExport, "Export this Probe Formation so it can be shared and imported into another profile.");
             btnExport.UseVisualStyleBackColor = true;
             btnExport.Click += btnExport_Click;
             // 
@@ -882,33 +914,35 @@
             label3.TabIndex = 37;
             label3.Text = "Z";
             // 
-            // groupBox1
+            // groupBoxVectors
             // 
-            groupBox1.Controls.Add(button2);
-            groupBox1.Controls.Add(panel1);
-            groupBox1.Controls.Add(btnExport);
-            groupBox1.Controls.Add(btnSave);
-            groupBox1.Controls.Add(btnImport);
-            groupBox1.Controls.Add(btnOrderToTop);
-            groupBox1.Controls.Add(lblFormationName);
-            groupBox1.Controls.Add(txtFormationName);
-            groupBox1.Location = new Point(12, 15);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(497, 359);
-            groupBox1.TabIndex = 38;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Editable";
+            groupBoxVectors.Controls.Add(btnReorigin);
+            groupBoxVectors.Controls.Add(panel1);
+            groupBoxVectors.Controls.Add(btnExport);
+            groupBoxVectors.Controls.Add(btnSave);
+            groupBoxVectors.Controls.Add(btnImport);
+            groupBoxVectors.Controls.Add(btnOrderToTop);
+            groupBoxVectors.Controls.Add(lblFormationName);
+            groupBoxVectors.Controls.Add(txtFormationName);
+            groupBoxVectors.Location = new Point(12, 15);
+            groupBoxVectors.Name = "groupBoxVectors";
+            groupBoxVectors.Size = new Size(497, 359);
+            groupBoxVectors.TabIndex = 38;
+            groupBoxVectors.TabStop = false;
+            groupBoxVectors.Text = "Raw Vectors";
             // 
-            // button2
+            // btnReorigin
             // 
-            button2.Location = new Point(222, 326);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 13;
-            button2.Text = "Re-Origin";
-            toolTip.SetToolTip(button2, "Reset any offset as if the probe formation is based on the Sun (0, 0, 0) as the point of origin.");
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            btnReorigin.Enabled = false;
+            btnReorigin.Location = new Point(222, 326);
+            btnReorigin.Name = "btnReorigin";
+            btnReorigin.Size = new Size(75, 23);
+            btnReorigin.TabIndex = 13;
+            btnReorigin.Text = "Re-Origin";
+            toolTip.SetToolTip(btnReorigin, "Reset any offset as if the probe formation is based on the Sun (0, 0, 0) as the point of origin.");
+            btnReorigin.UseVisualStyleBackColor = true;
+            btnReorigin.Visible = false;
+            btnReorigin.Click += btnReorigin_Click;
             // 
             // groupBox6
             // 
@@ -935,9 +969,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1151, 387);
             Controls.Add(groupBox6);
-            Controls.Add(groupBox1);
+            Controls.Add(groupBoxVectors);
             Name = "frmFormationEditor";
-            Text = "Probe Formation Editor";
+            Text = "Probe Formation Viewer";
+            Load += frmFormationEditor_Load;
             panel1.ResumeLayout(false);
             groupBoxAuColumn.ResumeLayout(false);
             groupBoxAuColumn.PerformLayout();
@@ -955,8 +990,8 @@
             groupBox2.PerformLayout();
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            groupBoxVectors.ResumeLayout(false);
+            groupBoxVectors.PerformLayout();
             groupBox6.ResumeLayout(false);
             groupBox6.PerformLayout();
             ResumeLayout(false);
@@ -1050,9 +1085,9 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private GroupBox groupBox1;
+        private GroupBox groupBoxVectors;
         private GroupBox groupBox6;
-        private Button button2;
+        private Button btnReorigin;
         private ToolTip toolTip;
     }
 }
