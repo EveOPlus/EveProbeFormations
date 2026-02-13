@@ -85,20 +85,27 @@ namespace EveProbeFormations
                 return;
             }
 
-            var selectedFormation = listBoxSavedFormations.SelectedItem;
+            var selectedFormation = listBoxSavedFormations.SelectedItem as FormationSegment;
             if (selectedFormation == null)
             {
                 return;
             }
 
-            UserProfileProcessor.FormationSegments.Remove((FormationSegment)selectedFormation);
-            UpdateListBox();
+            DialogResult dialogResult = MessageBox.Show($"Are you sure you want to delete \"{selectedFormation.FormationName}\"?", "Delete Fromation", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                UserProfileProcessor.FormationSegments.Remove(selectedFormation);
+                UpdateListBox();
 
-            UserProfileProcessor.CleanUpOrder();
-            UserProfileProcessor.SaveToUserProfile();
+                UserProfileProcessor.CleanUpOrder();
+                UserProfileProcessor.SaveToUserProfile();
 
-            MessageBox.Show("Formation added!");
-            this.Close();
+                this.Close();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                return;
+            }
         }
 
         private void btnExport_Click(object sender, EventArgs e)
