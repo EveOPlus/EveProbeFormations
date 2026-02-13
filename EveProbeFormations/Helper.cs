@@ -37,7 +37,9 @@ namespace EveProbeFormations
         {
             if (Directory.Exists(settingsFolderPath))
             {
-                return Directory.GetFiles(settingsFolderPath, "core_user_*.dat").OrderBy(x => x).ToList();
+                DirectoryInfo directoryInfo = new DirectoryInfo(settingsFolderPath);
+                FileInfo[] files = directoryInfo.GetFiles("core_user_*.dat");
+                return files.OrderByDescending(x => x.LastWriteTime).Select(x => x.FullName).ToList();
             }
 
             return new List<string>();

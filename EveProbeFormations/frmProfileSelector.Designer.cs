@@ -53,7 +53,7 @@
             // 
             // btnRefreshSettingsPath
             // 
-            btnRefreshSettingsPath.Location = new Point(58, 3);
+            btnRefreshSettingsPath.Location = new Point(58, 0);
             btnRefreshSettingsPath.Name = "btnRefreshSettingsPath";
             btnRefreshSettingsPath.Size = new Size(58, 21);
             btnRefreshSettingsPath.TabIndex = 1;
@@ -122,7 +122,7 @@
             // 
             // btnSettingsFolderPicker
             // 
-            btnSettingsFolderPicker.Location = new Point(3, 3);
+            btnSettingsFolderPicker.Location = new Point(3, -1);
             btnSettingsFolderPicker.Name = "btnSettingsFolderPicker";
             btnSettingsFolderPicker.Size = new Size(49, 23);
             btnSettingsFolderPicker.TabIndex = 2;
