@@ -226,7 +226,7 @@ namespace EveProbeFormations
         {
             for (int i = 0; i < howFarToSeek; i++)
             {
-                ReadByte(reader);
+                PreSegmentBytes.Add(ReadByte(reader));
             }
         }
 

@@ -120,7 +120,7 @@ namespace EveProbeFormations
             string[] lines = exportedCipherBlob.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
 
             if (!lines[0].StartsWith("=== Eve Probe Fromation"))
-                throw new Exception("Not a valid formatted prove formation.");
+                throw new Exception("Not a valid formatted probe formation.");
 
             var sb = new StringBuilder();
             foreach (var line in lines)
