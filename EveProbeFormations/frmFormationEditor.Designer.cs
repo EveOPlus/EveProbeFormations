@@ -71,23 +71,23 @@
             txtX2 = new TextBox();
             txtX1 = new TextBox();
             groupBox4 = new GroupBox();
-            txtLong8 = new TextBox();
-            txtLong1 = new TextBox();
-            txtLong4 = new TextBox();
-            txtLong7 = new TextBox();
-            txtLong5 = new TextBox();
-            txtLong2 = new TextBox();
-            txtLong3 = new TextBox();
-            txtLong6 = new TextBox();
+            txtElevation8 = new TextBox();
+            txtElevation1 = new TextBox();
+            txtElevation4 = new TextBox();
+            txtElevation7 = new TextBox();
+            txtElevation5 = new TextBox();
+            txtElevation2 = new TextBox();
+            txtElevation3 = new TextBox();
+            txtElevation6 = new TextBox();
             groupBox3 = new GroupBox();
-            txtLat8 = new TextBox();
-            txtLat1 = new TextBox();
-            txtLat4 = new TextBox();
-            txtLat7 = new TextBox();
-            txtLat5 = new TextBox();
-            txtLat2 = new TextBox();
-            txtLat3 = new TextBox();
-            txtLat6 = new TextBox();
+            txtAzimuth8 = new TextBox();
+            txtAzimuth1 = new TextBox();
+            txtAzimuth4 = new TextBox();
+            txtAzimuth7 = new TextBox();
+            txtAzimuth5 = new TextBox();
+            txtAzimuth2 = new TextBox();
+            txtAzimuth3 = new TextBox();
+            txtAzimuth6 = new TextBox();
             groupBox2 = new GroupBox();
             txtDistance8 = new TextBox();
             txtDistance1 = new TextBox();
@@ -508,165 +508,165 @@
             // 
             // groupBox4
             // 
-            groupBox4.Controls.Add(txtLong8);
-            groupBox4.Controls.Add(txtLong1);
-            groupBox4.Controls.Add(txtLong4);
-            groupBox4.Controls.Add(txtLong7);
-            groupBox4.Controls.Add(txtLong5);
-            groupBox4.Controls.Add(txtLong2);
-            groupBox4.Controls.Add(txtLong3);
-            groupBox4.Controls.Add(txtLong6);
+            groupBox4.Controls.Add(txtElevation8);
+            groupBox4.Controls.Add(txtElevation1);
+            groupBox4.Controls.Add(txtElevation4);
+            groupBox4.Controls.Add(txtElevation7);
+            groupBox4.Controls.Add(txtElevation5);
+            groupBox4.Controls.Add(txtElevation2);
+            groupBox4.Controls.Add(txtElevation3);
+            groupBox4.Controls.Add(txtElevation6);
             groupBox4.Location = new Point(127, 55);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(115, 258);
             groupBox4.TabIndex = 34;
             groupBox4.TabStop = false;
-            groupBox4.Text = "Longitude °";
+            groupBox4.Text = "Elevation °";
             // 
-            // txtLong8
+            // txtElevation8
             // 
-            txtLong8.Location = new Point(5, 227);
-            txtLong8.Name = "txtLong8";
-            txtLong8.ReadOnly = true;
-            txtLong8.Size = new Size(100, 23);
-            txtLong8.TabIndex = 31;
+            txtElevation8.Location = new Point(5, 227);
+            txtElevation8.Name = "txtElevation8";
+            txtElevation8.ReadOnly = true;
+            txtElevation8.Size = new Size(100, 23);
+            txtElevation8.TabIndex = 31;
             // 
-            // txtLong1
+            // txtElevation1
             // 
-            txtLong1.Location = new Point(6, 24);
-            txtLong1.Name = "txtLong1";
-            txtLong1.ReadOnly = true;
-            txtLong1.Size = new Size(100, 23);
-            txtLong1.TabIndex = 24;
+            txtElevation1.Location = new Point(6, 24);
+            txtElevation1.Name = "txtElevation1";
+            txtElevation1.ReadOnly = true;
+            txtElevation1.Size = new Size(100, 23);
+            txtElevation1.TabIndex = 24;
             // 
-            // txtLong4
+            // txtElevation4
             // 
-            txtLong4.Location = new Point(5, 111);
-            txtLong4.Name = "txtLong4";
-            txtLong4.ReadOnly = true;
-            txtLong4.Size = new Size(100, 23);
-            txtLong4.TabIndex = 27;
+            txtElevation4.Location = new Point(5, 111);
+            txtElevation4.Name = "txtElevation4";
+            txtElevation4.ReadOnly = true;
+            txtElevation4.Size = new Size(100, 23);
+            txtElevation4.TabIndex = 27;
             // 
-            // txtLong7
+            // txtElevation7
             // 
-            txtLong7.Location = new Point(5, 198);
-            txtLong7.Name = "txtLong7";
-            txtLong7.ReadOnly = true;
-            txtLong7.Size = new Size(100, 23);
-            txtLong7.TabIndex = 30;
+            txtElevation7.Location = new Point(5, 198);
+            txtElevation7.Name = "txtElevation7";
+            txtElevation7.ReadOnly = true;
+            txtElevation7.Size = new Size(100, 23);
+            txtElevation7.TabIndex = 30;
             // 
-            // txtLong5
+            // txtElevation5
             // 
-            txtLong5.Location = new Point(5, 140);
-            txtLong5.Name = "txtLong5";
-            txtLong5.ReadOnly = true;
-            txtLong5.Size = new Size(100, 23);
-            txtLong5.TabIndex = 28;
+            txtElevation5.Location = new Point(5, 140);
+            txtElevation5.Name = "txtElevation5";
+            txtElevation5.ReadOnly = true;
+            txtElevation5.Size = new Size(100, 23);
+            txtElevation5.TabIndex = 28;
             // 
-            // txtLong2
+            // txtElevation2
             // 
-            txtLong2.Location = new Point(5, 53);
-            txtLong2.Name = "txtLong2";
-            txtLong2.ReadOnly = true;
-            txtLong2.Size = new Size(100, 23);
-            txtLong2.TabIndex = 25;
+            txtElevation2.Location = new Point(5, 53);
+            txtElevation2.Name = "txtElevation2";
+            txtElevation2.ReadOnly = true;
+            txtElevation2.Size = new Size(100, 23);
+            txtElevation2.TabIndex = 25;
             // 
-            // txtLong3
+            // txtElevation3
             // 
-            txtLong3.Location = new Point(5, 82);
-            txtLong3.Name = "txtLong3";
-            txtLong3.ReadOnly = true;
-            txtLong3.Size = new Size(100, 23);
-            txtLong3.TabIndex = 26;
+            txtElevation3.Location = new Point(5, 82);
+            txtElevation3.Name = "txtElevation3";
+            txtElevation3.ReadOnly = true;
+            txtElevation3.Size = new Size(100, 23);
+            txtElevation3.TabIndex = 26;
             // 
-            // txtLong6
+            // txtElevation6
             // 
-            txtLong6.Location = new Point(5, 169);
-            txtLong6.Name = "txtLong6";
-            txtLong6.ReadOnly = true;
-            txtLong6.Size = new Size(100, 23);
-            txtLong6.TabIndex = 29;
+            txtElevation6.Location = new Point(5, 169);
+            txtElevation6.Name = "txtElevation6";
+            txtElevation6.ReadOnly = true;
+            txtElevation6.Size = new Size(100, 23);
+            txtElevation6.TabIndex = 29;
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(txtLat8);
-            groupBox3.Controls.Add(txtLat1);
-            groupBox3.Controls.Add(txtLat4);
-            groupBox3.Controls.Add(txtLat7);
-            groupBox3.Controls.Add(txtLat5);
-            groupBox3.Controls.Add(txtLat2);
-            groupBox3.Controls.Add(txtLat3);
-            groupBox3.Controls.Add(txtLat6);
+            groupBox3.Controls.Add(txtAzimuth8);
+            groupBox3.Controls.Add(txtAzimuth1);
+            groupBox3.Controls.Add(txtAzimuth4);
+            groupBox3.Controls.Add(txtAzimuth7);
+            groupBox3.Controls.Add(txtAzimuth5);
+            groupBox3.Controls.Add(txtAzimuth2);
+            groupBox3.Controls.Add(txtAzimuth3);
+            groupBox3.Controls.Add(txtAzimuth6);
             groupBox3.Location = new Point(6, 55);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(115, 258);
             groupBox3.TabIndex = 33;
             groupBox3.TabStop = false;
-            groupBox3.Text = "Latitude °";
+            groupBox3.Text = "Azimuth °";
             // 
-            // txtLat8
+            // txtAzimuth8
             // 
-            txtLat8.Location = new Point(5, 227);
-            txtLat8.Name = "txtLat8";
-            txtLat8.ReadOnly = true;
-            txtLat8.Size = new Size(100, 23);
-            txtLat8.TabIndex = 31;
+            txtAzimuth8.Location = new Point(5, 227);
+            txtAzimuth8.Name = "txtAzimuth8";
+            txtAzimuth8.ReadOnly = true;
+            txtAzimuth8.Size = new Size(100, 23);
+            txtAzimuth8.TabIndex = 31;
             // 
-            // txtLat1
+            // txtAzimuth1
             // 
-            txtLat1.Location = new Point(6, 24);
-            txtLat1.Name = "txtLat1";
-            txtLat1.ReadOnly = true;
-            txtLat1.Size = new Size(100, 23);
-            txtLat1.TabIndex = 24;
+            txtAzimuth1.Location = new Point(6, 24);
+            txtAzimuth1.Name = "txtAzimuth1";
+            txtAzimuth1.ReadOnly = true;
+            txtAzimuth1.Size = new Size(100, 23);
+            txtAzimuth1.TabIndex = 24;
             // 
-            // txtLat4
+            // txtAzimuth4
             // 
-            txtLat4.Location = new Point(5, 111);
-            txtLat4.Name = "txtLat4";
-            txtLat4.ReadOnly = true;
-            txtLat4.Size = new Size(100, 23);
-            txtLat4.TabIndex = 27;
+            txtAzimuth4.Location = new Point(5, 111);
+            txtAzimuth4.Name = "txtAzimuth4";
+            txtAzimuth4.ReadOnly = true;
+            txtAzimuth4.Size = new Size(100, 23);
+            txtAzimuth4.TabIndex = 27;
             // 
-            // txtLat7
+            // txtAzimuth7
             // 
-            txtLat7.Location = new Point(5, 198);
-            txtLat7.Name = "txtLat7";
-            txtLat7.ReadOnly = true;
-            txtLat7.Size = new Size(100, 23);
-            txtLat7.TabIndex = 30;
+            txtAzimuth7.Location = new Point(5, 198);
+            txtAzimuth7.Name = "txtAzimuth7";
+            txtAzimuth7.ReadOnly = true;
+            txtAzimuth7.Size = new Size(100, 23);
+            txtAzimuth7.TabIndex = 30;
             // 
-            // txtLat5
+            // txtAzimuth5
             // 
-            txtLat5.Location = new Point(5, 140);
-            txtLat5.Name = "txtLat5";
-            txtLat5.ReadOnly = true;
-            txtLat5.Size = new Size(100, 23);
-            txtLat5.TabIndex = 28;
+            txtAzimuth5.Location = new Point(5, 140);
+            txtAzimuth5.Name = "txtAzimuth5";
+            txtAzimuth5.ReadOnly = true;
+            txtAzimuth5.Size = new Size(100, 23);
+            txtAzimuth5.TabIndex = 28;
             // 
-            // txtLat2
+            // txtAzimuth2
             // 
-            txtLat2.Location = new Point(5, 53);
-            txtLat2.Name = "txtLat2";
-            txtLat2.ReadOnly = true;
-            txtLat2.Size = new Size(100, 23);
-            txtLat2.TabIndex = 25;
+            txtAzimuth2.Location = new Point(5, 53);
+            txtAzimuth2.Name = "txtAzimuth2";
+            txtAzimuth2.ReadOnly = true;
+            txtAzimuth2.Size = new Size(100, 23);
+            txtAzimuth2.TabIndex = 25;
             // 
-            // txtLat3
+            // txtAzimuth3
             // 
-            txtLat3.Location = new Point(5, 82);
-            txtLat3.Name = "txtLat3";
-            txtLat3.ReadOnly = true;
-            txtLat3.Size = new Size(100, 23);
-            txtLat3.TabIndex = 26;
+            txtAzimuth3.Location = new Point(5, 82);
+            txtAzimuth3.Name = "txtAzimuth3";
+            txtAzimuth3.ReadOnly = true;
+            txtAzimuth3.Size = new Size(100, 23);
+            txtAzimuth3.TabIndex = 26;
             // 
-            // txtLat6
+            // txtAzimuth6
             // 
-            txtLat6.Location = new Point(5, 169);
-            txtLat6.Name = "txtLat6";
-            txtLat6.ReadOnly = true;
-            txtLat6.Size = new Size(100, 23);
-            txtLat6.TabIndex = 29;
+            txtAzimuth6.Location = new Point(5, 169);
+            txtAzimuth6.Name = "txtAzimuth6";
+            txtAzimuth6.ReadOnly = true;
+            txtAzimuth6.Size = new Size(100, 23);
+            txtAzimuth6.TabIndex = 29;
             // 
             // groupBox2
             // 
@@ -1056,23 +1056,23 @@
         private TextBox txtDistance3;
         private TextBox txtDistance6;
         private GroupBox groupBox4;
-        private TextBox txtLong8;
-        private TextBox txtLong1;
-        private TextBox txtLong4;
-        private TextBox txtLong7;
-        private TextBox txtLong5;
-        private TextBox txtLong2;
-        private TextBox txtLong3;
-        private TextBox txtLong6;
+        private TextBox txtElevation8;
+        private TextBox txtElevation1;
+        private TextBox txtElevation4;
+        private TextBox txtElevation7;
+        private TextBox txtElevation5;
+        private TextBox txtElevation2;
+        private TextBox txtElevation3;
+        private TextBox txtElevation6;
         private GroupBox groupBox3;
-        private TextBox txtLat8;
-        private TextBox txtLat1;
-        private TextBox txtLat4;
-        private TextBox txtLat7;
-        private TextBox txtLat5;
-        private TextBox txtLat2;
-        private TextBox txtLat3;
-        private TextBox txtLat6;
+        private TextBox txtAzimuth8;
+        private TextBox txtAzimuth1;
+        private TextBox txtAzimuth4;
+        private TextBox txtAzimuth7;
+        private TextBox txtAzimuth5;
+        private TextBox txtAzimuth2;
+        private TextBox txtAzimuth3;
+        private TextBox txtAzimuth6;
         private GroupBox groupBox5;
         private TextBox txtNormalVect8;
         private TextBox txtNormalVect1;

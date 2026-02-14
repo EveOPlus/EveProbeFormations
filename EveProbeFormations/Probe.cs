@@ -28,7 +28,7 @@ namespace EveProbeFormations
 
         private bool CheckIsValid() 
         {
-            if (double.IsNaN(X) || double.IsNaN(Y) || double.IsNaN(Z) || double.IsNaN(DimeterRaw))
+            if (double.IsNaN(X) || double.IsNaN(Y) || double.IsNaN(Z) || double.IsNaN(DimeterRaw) || DimeterRaw < 1d)
             {
                 return false;
             }
