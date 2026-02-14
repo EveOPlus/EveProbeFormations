@@ -2,6 +2,8 @@ namespace EveProbeFormations
 {
     public partial class frmProfileSelector : Form
     {
+        private string pathToEveSettingsFolder = string.Empty;
+
         public frmProfileSelector()
         {
             InitializeComponent();
@@ -14,8 +16,8 @@ namespace EveProbeFormations
                 MessageBox.Show("This software is provided \"as is\", without warranties of any kind, disclaiming liability for damages, including negligence, resulting from its use.");
             }
 
-            txtPathToSettingsFolder.Text = Helper.TryToFindPathToDefaultSettings();
-            if (!string.IsNullOrEmpty(txtPathToSettingsFolder.Text))
+            pathToEveSettingsFolder = Helper.TryToFindPathToLocalEve();
+            if (!string.IsNullOrEmpty(pathToEveSettingsFolder))
             {
                 RefreshUserDatPaths();
             }
@@ -29,7 +31,7 @@ namespace EveProbeFormations
         private void RefreshUserDatPaths()
         {
             listBoxUserDatPaths.Items.Clear();
-            var files = Helper.GetUserDatFiles(txtPathToSettingsFolder.Text);
+            var files = Helper.GetUserDatFiles(pathToEveSettingsFolder);
 
             foreach (var file in files)
             {
@@ -63,7 +65,7 @@ namespace EveProbeFormations
 
                 if (result == DialogResult.OK)
                 {
-                    txtPathToSettingsFolder.Text = fbd.SelectedPath;
+                    pathToEveSettingsFolder = fbd.SelectedPath;
                     RefreshUserDatPaths();
                 }
             }

@@ -56,12 +56,76 @@ namespace EveProbeFormations
             return new string(chars);
         }
 
+        private int IdempotentFindIndexOfProbeScanningCustomFormationPrefixDelimiter() 
+        {
+            // "probescanning.customFormations" in ASCII 70 72 6f 62 65 73 63 61 6e 6e 69 6e 67 2e 63 75 73 74 6f 6d 46 6f 72 6d 61 74 69 6f 6e 73  
+            var stringAtEndOfFormationSection = new byte[] { 0x70, 0x72, 0x6f, 0x62, 0x65, 0x73, 0x63, 0x61, 0x6e, 0x6e, 0x69, 0x6e, 0x67, 0x2e, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73 }; 
+            var delimiterAtStartOfFormationSection = new byte[] { 0x2c, 0x2f }; // note 0x2f seems to be the start of a segment and then each 0x2e after that is an item in the segment.
+
+            var searchForEndBuffer = new Queue<byte>();
+            Enumerable.Range(0, stringAtEndOfFormationSection.Length).ToList().ForEach(i => searchForEndBuffer.Enqueue(0x00));
+
+            var searchForStartBuffer = new Queue<byte>();
+            Enumerable.Range(0, delimiterAtStartOfFormationSection.Length).ToList().ForEach(i => searchForStartBuffer.Enqueue(0x00));
+
+            var indexOfLastDelimiter = -1;
+            var currentIndex = 0;
+
+            using (FileStream fs = new FileStream(PathToUserProfile, FileMode.Open, FileAccess.Read))
+            using (BinaryReader reader = new BinaryReader(fs))
+            {
+                try 
+                {
+                    while (fs.Position < fs.Length)
+                    {
+                        var nextByte = reader.ReadByte();
+                        searchForStartBuffer.Dequeue();
+                        searchForEndBuffer.Dequeue();
+
+                        searchForStartBuffer.Enqueue(nextByte);
+                        searchForEndBuffer.Enqueue(nextByte);
+
+                        if (searchForStartBuffer.ToArray().Like(delimiterAtStartOfFormationSection))
+                        {
+                            indexOfLastDelimiter = currentIndex - 1;
+                        }
+
+                        if (searchForEndBuffer.ToArray().Like(stringAtEndOfFormationSection))
+                        {
+                            return indexOfLastDelimiter;
+                        }
+
+                        currentIndex++;
+                    }
+                }
+                catch (EndOfStreamException eos)
+                {
+                    throw new Exception("There must be at least one saved formation locate the relevant section for managing. Please create one in game first.");
+                }
+            }
+
+            return -1;
+        }
+
         private void ParseFile()
         {
             using (FileStream fs = new FileStream(PathToUserProfile, FileMode.Open, FileAccess.Read))
             using (BinaryReader reader = new BinaryReader(fs))
             {
-                SeekToTheProbeFormationSegment(reader);
+                var indexOfProbeSectionDelimiter = IdempotentFindIndexOfProbeScanningCustomFormationPrefixDelimiter();
+                SeekIntoStream(reader, indexOfProbeSectionDelimiter);
+                var segmentHeaderBytes = ReadBytes(reader, 13);
+                var nextDelimiterBytes = ReadBytes(reader, 2);
+                PreSegmentBytes.AddRange(segmentHeaderBytes);
+
+                if (segmentHeaderBytes[0] != 0x2c) throw new Exception($"Expected the 0x2c delimiter but found {segmentHeaderBytes[0]:x2}"); // should be the first delimiter before the segments header.
+                if (segmentHeaderBytes[1] != 0x2f) throw new Exception($"Expected the 0x2f prefix but found {segmentHeaderBytes[1]:x2}"); // should be the identifier for the start of a new segment e.g. drone group or probe formation.
+
+               var numberOfFormations = segmentHeaderBytes[12]; // this byte seems to indicate how many formations there are. We don't need it but better to know and not need it.
+
+                // skip the delimiter and prefix for the first segment.
+                if (nextDelimiterBytes[0] != 0x2c) throw new Exception($"Expected the 0x2c delimiter but found {nextDelimiterBytes[0]:x2}");
+                if (nextDelimiterBytes[1] != 0x2e) throw new Exception($"Expected the 0x2e prefix but found {nextDelimiterBytes[1]:x2}"); 
 
                 bool isMoreFormations = true;
 
@@ -158,35 +222,11 @@ namespace EveProbeFormations
             return probe;
         }
 
-        public void SeekToTheProbeFormationSegment(BinaryReader reader)
+        public void SeekIntoStream(BinaryReader reader, int howFarToSeek)
         {
-            try
+            for (int i = 0; i < howFarToSeek; i++)
             {
-                while (true)
-                {
-                    var firstByte = ReadByte(reader);
-
-                    if (firstByte == 0x2c)
-                    {
-                        var secondByte = ReadByte(reader);
-
-                        if (secondByte == 0x2e)
-                        {
-                            break;
-                        }
-
-                        PreSegmentBytes.Add(firstByte);
-                        PreSegmentBytes.Add(secondByte);
-                    }
-                    else
-                    {
-                        PreSegmentBytes.Add(firstByte);
-                    }
-                }
-            }
-            catch (EndOfStreamException eos)
-            {
-                throw new Exception("Unable to locate any saved probe formations.");
+                ReadByte(reader);
             }
         }
 

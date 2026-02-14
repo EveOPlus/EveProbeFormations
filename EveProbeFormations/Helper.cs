@@ -10,22 +10,17 @@ namespace EveProbeFormations
     {
         public static bool RunningInUnlockedMode = false;
 
-        public static string? TryToFindPathToDefaultSettings()
+        public static string? TryToFindPathToLocalEve()
         {
             try
             {
-                var tranqPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\CCP\EVE\c_ccp_eve_tq_tranquility";
-                string? path = tranqPath + @"\settings_Default";
-                if (!System.IO.Directory.Exists(path))
+                var eveLocalAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\CCP\EVE";
+                if (System.IO.Directory.Exists(eveLocalAppDataPath))
                 {
-                    var settingsOptions = Directory.GetDirectories(tranqPath, "settings_*");
-                    if (settingsOptions.Any())
-                    {
-                        path = settingsOptions.FirstOrDefault();
-                    }
+                    return eveLocalAppDataPath;
                 }
 
-                return path;
+                return null;
             }
             catch
             {
@@ -35,14 +30,30 @@ namespace EveProbeFormations
 
         public static List<string> GetUserDatFiles(string settingsFolderPath)
         {
+            var result = new List<string>();
             if (Directory.Exists(settingsFolderPath))
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(settingsFolderPath);
                 FileInfo[] files = directoryInfo.GetFiles("core_user_*.dat");
-                return files.OrderByDescending(x => x.LastWriteTime).Select(x => x.FullName).ToList();
+                result.AddRange(files.OrderByDescending(x => x.LastWriteTime).Select(x => x.FullName));
             }
 
-            return new List<string>();
+            var subFolders = Directory.GetDirectories(settingsFolderPath);
+            foreach (var subFolder in subFolders)
+            {
+                var thisFolderName = new DirectoryInfo(subFolder).Name.ToLower();
+                if (thisFolderName.Contains("eve") && (thisFolderName.Contains("tq") || thisFolderName.Contains("tranq")))
+                {
+                    result.AddRange(GetUserDatFiles(subFolder));
+                }
+
+                if (thisFolderName.StartsWith("settings_"))
+                {
+                    result.AddRange(GetUserDatFiles(subFolder));
+                }
+            }
+
+            return result;
         }
 
         public static bool Like(this double myDouble, double comparisonValue)
@@ -127,6 +138,24 @@ namespace EveProbeFormations
             var json = CryptoHelper.Decrypt(cipherText);
 
             return JsonConvert.DeserializeObject<FormationSegment>(json);
+        }
+
+        public static bool Like(this byte[] arrayA, byte[] arrayB)
+        {
+            if (arrayA == null || arrayB == null || arrayA.Length != arrayB.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < arrayA.Length; i++)
+            {
+                if (arrayA[i] != arrayB[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
