@@ -253,9 +253,9 @@ namespace EveProbeFormations
             var validProbes = SelectedFormation.Probes.FindAll(p => p.IsValid);
             foreach (var probe in validProbes)
             {
-                probe.X = probe.X - _averageX;
-                probe.Y = probe.Y - _averageY;
-                probe.Z = probe.Z - _averageZ;
+                probe.X = probe.X - Math.Round(_averageX, 0);
+                probe.Y = probe.Y - Math.Round(_averageY, 0);
+                probe.Z = probe.Z - Math.Round(_averageZ, 0);
             }
 
             LoadSelectedFormationToForm();
