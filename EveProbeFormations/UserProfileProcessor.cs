@@ -74,37 +74,30 @@ namespace EveProbeFormations
             using (FileStream fs = new FileStream(PathToUserProfile, FileMode.Open, FileAccess.Read))
             using (BinaryReader reader = new BinaryReader(fs))
             {
-                try 
+                while (fs.Position < fs.Length)
                 {
-                    while (fs.Position < fs.Length)
+                    var nextByte = reader.ReadByte();
+                    searchForStartBuffer.Dequeue();
+                    searchForEndBuffer.Dequeue();
+
+                    searchForStartBuffer.Enqueue(nextByte);
+                    searchForEndBuffer.Enqueue(nextByte);
+
+                    if (searchForStartBuffer.ToArray().Like(delimiterAtStartOfFormationSection))
                     {
-                        var nextByte = reader.ReadByte();
-                        searchForStartBuffer.Dequeue();
-                        searchForEndBuffer.Dequeue();
-
-                        searchForStartBuffer.Enqueue(nextByte);
-                        searchForEndBuffer.Enqueue(nextByte);
-
-                        if (searchForStartBuffer.ToArray().Like(delimiterAtStartOfFormationSection))
-                        {
-                            indexOfLastDelimiter = currentIndex - 1;
-                        }
-
-                        if (searchForEndBuffer.ToArray().Like(stringAtEndOfFormationSection))
-                        {
-                            return indexOfLastDelimiter;
-                        }
-
-                        currentIndex++;
+                        indexOfLastDelimiter = currentIndex - 1;
                     }
-                }
-                catch (EndOfStreamException eos)
-                {
-                    throw new Exception("There must be at least one saved formation locate the relevant section for managing. Please create one in game first.");
+
+                    if (searchForEndBuffer.ToArray().Like(stringAtEndOfFormationSection))
+                    {
+                        return indexOfLastDelimiter;
+                    }
+
+                    currentIndex++;
                 }
             }
 
-            return -1;
+            throw new Exception("There must be at least one saved formation locate the profile to help locate the relevant section for managing. Please create one in game first.");
         }
 
         private void ParseFile()
@@ -112,7 +105,16 @@ namespace EveProbeFormations
             using (FileStream fs = new FileStream(PathToUserProfile, FileMode.Open, FileAccess.Read))
             using (BinaryReader reader = new BinaryReader(fs))
             {
-                var indexOfProbeSectionDelimiter = IdempotentFindIndexOfProbeScanningCustomFormationPrefixDelimiter();
+                var indexOfProbeSectionDelimiter = -1;
+                try
+                {
+                    indexOfProbeSectionDelimiter = IdempotentFindIndexOfProbeScanningCustomFormationPrefixDelimiter();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    throw;
+                }
                 SeekIntoStream(reader, indexOfProbeSectionDelimiter);
                 var segmentHeaderBytes = ReadBytes(reader, 13);
                 var nextDelimiterBytes = ReadBytes(reader, 2);
