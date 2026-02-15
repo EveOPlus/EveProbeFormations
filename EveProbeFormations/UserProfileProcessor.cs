@@ -126,6 +126,7 @@ namespace EveProbeFormations
                 if (nextDelimiterBytes[0] == 0x13 && nextDelimiterBytes[1] == 0x1e) // we found the end of the probe section without any formations.
                 {
                     // nothing more to do, it's just an empty list here.
+                    PostSegmentBytes.AddRange(nextDelimiterBytes); // don't lose those terminating bytes to end off the section once we add new formations.
                 }
                 else 
                 {
