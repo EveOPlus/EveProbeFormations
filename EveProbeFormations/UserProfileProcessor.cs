@@ -123,57 +123,64 @@ namespace EveProbeFormations
 
                var numberOfFormations = segmentHeaderBytes[12]; // this byte seems to indicate how many formations there are. We don't need it but better to know and not need it.
 
-                // skip the delimiter and prefix for the first segment.
-                if (nextDelimiterBytes[0] != 0x2c) throw new Exception($"Expected the 0x2c delimiter but found {nextDelimiterBytes[0]:x2}");
-                if (nextDelimiterBytes[1] != 0x2e) throw new Exception($"Expected the 0x2e prefix but found {nextDelimiterBytes[1]:x2}"); 
-
-                bool isMoreFormations = true;
-
-                while (isMoreFormations)
+                if (nextDelimiterBytes[0] == 0x13 && nextDelimiterBytes[1] == 0x1e) // we found the end of the probe section without any formations.
                 {
-                    var formation = new FormationSegment();
-                    FormationSegments.Add(formation);
+                    // nothing more to do, it's just an empty list here.
+                }
+                else 
+                {
+                    // skip the delimiter and prefix for the first segment.
+                    if (nextDelimiterBytes[0] != 0x2c) throw new Exception($"Expected the 0x2c delimiter but found {nextDelimiterBytes[0]:x2}");
+                    if (nextDelimiterBytes[1] != 0x2e) throw new Exception($"Expected the 0x2e prefix but found {nextDelimiterBytes[1]:x2}");
 
-                    formation.SegmentPrefixDelimiterPosition = Position - 2; // Minus two because we likely read a 0x2c and 0x2e to find the start of this segment.
+                    bool isMoreFormations = true;
 
-                    var labelLength = ReadSByte(reader);
-                    formation.FormationName = ReadChars(reader, labelLength);
-
-                    if (ReadByte(reader) != 0x15) // this seems to be a static value after the label for probe formations.
+                    while (isMoreFormations)
                     {
-                        continue; // This wasn't a probe formation so skip it.
-                    }
+                        var formation = new FormationSegment();
+                        FormationSegments.Add(formation);
 
-                    sbyte totalProbesInFormation = ReadSByte(reader);
+                        formation.SegmentPrefixDelimiterPosition = Position - 2; // Minus two because we likely read a 0x2c and 0x2e to find the start of this segment.
 
-                    formation.Probes = ReadAllProbes(reader, totalProbesInFormation);
+                        var labelLength = ReadSByte(reader);
+                        formation.FormationName = ReadChars(reader, labelLength);
 
-                    var finalByte1 = ReadByte(reader); // Should be 0x06 or the identifier. Not totally sure why.
-                    var finalByte2 = ReadByte(reader);
+                        if (ReadByte(reader) != 0x15) // this seems to be a static value after the label for probe formations.
+                        {
+                            continue; // This wasn't a probe formation so skip it.
+                        }
 
-                    if (finalByte2 != 0x2c && finalByte1 == 0x06)
-                    {
-                        formation.Has0x06AtFinalBytes = true;
-                        formation.SegmentIdentityByte = finalByte2;
-                    }
-                    else
-                    {
-                        formation.Has0x06AtFinalBytes = false;
-                        formation.SegmentIdentityByte = finalByte1;
-                    }
+                        sbyte totalProbesInFormation = ReadSByte(reader);
 
-                    var endOfSegmentDelimiterByte = formation.Has0x06AtFinalBytes ? ReadByte(reader) : finalByte2; // Should be 0x2c but only if there are more to process.
-                    if (endOfSegmentDelimiterByte == 0x2c)
-                    {
-                        ReadByte(reader); // == 0x2e
-                        // there is at least one more formation to process.
-                        isMoreFormations = true;
-                    }
-                    else
-                    {
-                        // there are no more formations to process. We have reached the end of this segment.
-                        isMoreFormations = false;
-                        PostSegmentBytes.Add(endOfSegmentDelimiterByte);
+                        formation.Probes = ReadAllProbes(reader, totalProbesInFormation);
+
+                        var finalByte1 = ReadByte(reader); // Should be 0x06 or the identifier. Not totally sure why.
+                        var finalByte2 = ReadByte(reader);
+
+                        if (finalByte2 != 0x2c && finalByte1 == 0x06)
+                        {
+                            formation.Has0x06AtFinalBytes = true;
+                            formation.SegmentIdentityByte = finalByte2;
+                        }
+                        else
+                        {
+                            formation.Has0x06AtFinalBytes = false;
+                            formation.SegmentIdentityByte = finalByte1;
+                        }
+
+                        var endOfSegmentDelimiterByte = formation.Has0x06AtFinalBytes ? ReadByte(reader) : finalByte2; // Should be 0x2c but only if there are more to process.
+                        if (endOfSegmentDelimiterByte == 0x2c)
+                        {
+                            ReadByte(reader); // == 0x2e
+                                              // there is at least one more formation to process.
+                            isMoreFormations = true;
+                        }
+                        else
+                        {
+                            // there are no more formations to process. We have reached the end of this segment.
+                            isMoreFormations = false;
+                            PostSegmentBytes.Add(endOfSegmentDelimiterByte);
+                        }
                     }
                 }
 
