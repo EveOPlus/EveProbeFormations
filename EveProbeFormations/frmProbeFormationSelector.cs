@@ -13,21 +13,26 @@ namespace EveProbeFormations
     public partial class frmProbeFormationSelector : Form
     {
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string PathToUserProfile { get; set; }
+        public UserDatFound UserDatProfile { get; set; }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public UserProfileProcessor UserProfileProcessor { get; set; }
 
-        public frmProbeFormationSelector(string pathToUserProfile)
+        public frmProbeFormationSelector(UserDatFound userDatProfile)
         {
-            PathToUserProfile = pathToUserProfile;
+            UserDatProfile = userDatProfile;
             InitializeComponent();
 
-            var profileName = Path.GetFileName(pathToUserProfile);
-            lblProfilePath.Text = profileName;
-            UserProfileProcessor = new UserProfileProcessor(pathToUserProfile);
+            lblProfilePath.Text = userDatProfile.FileName;
+            UserProfileProcessor = new UserProfileProcessor(userDatProfile.FilePath);
 
             UpdateListBox();
+
+            if (UserProfileProcessor.UserId != null)
+            {
+                    Helper.TryFindUserAlias(UserProfileProcessor.UserId, out string userAlias);
+                    txtAlias.Text = userAlias;
+            }            
         }
 
         private void UpdateListBox()
@@ -51,7 +56,7 @@ namespace EveProbeFormations
                 return;
             }
 
-            var editor = new frmFormationEditor(PathToUserProfile, UserProfileProcessor, (FormationSegment)listBoxSavedFormations.SelectedItem);
+            var editor = new frmFormationEditor(UserDatProfile.FilePath, UserProfileProcessor, (FormationSegment)listBoxSavedFormations.SelectedItem);
             editor.Show();
             this.Enabled = false;
 
@@ -157,6 +162,24 @@ namespace EveProbeFormations
             Clipboard.SetText(Helper.GenerateExportBlobs(selectedFormations));
 
             MessageBox.Show("Formation copied to clipboard!");
+        }
+
+        private void txtAlias_LostFocus(object sender, EventArgs e) 
+        {
+            if (UserProfileProcessor.UserId == null)
+            {
+                return;
+            }
+
+            Helper.TryFindUserAlias(UserProfileProcessor.UserId, out string userAlias);
+            var theControl = sender as Control;
+            if (theControl == null)
+            {
+                return;
+            }
+
+            var newAlias = theControl.Text;
+            Helper.UpdateUserAlias(UserProfileProcessor.UserId, newAlias);
         }
     }
 }

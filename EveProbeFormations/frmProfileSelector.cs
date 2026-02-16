@@ -16,7 +16,7 @@ namespace EveProbeFormations
                 MessageBox.Show("This software is provided \"as is\", without warranties of any kind, disclaiming liability for damages, including negligence, resulting from its use.");
             }
 
-            pathToEveSettingsFolder = Helper.TryToFindPathToLocalEve();
+            pathToEveSettingsFolder = Helper.TryToFindPathToLocalEve() ?? string.Empty;
             if (!string.IsNullOrEmpty(pathToEveSettingsFolder))
             {
                 RefreshUserDatPaths();
@@ -30,24 +30,23 @@ namespace EveProbeFormations
 
         private void RefreshUserDatPaths()
         {
-            listBoxUserDatPaths.Items.Clear();
             var files = Helper.GetUserDatFiles(pathToEveSettingsFolder);
 
-            foreach (var file in files)
-            {
-                listBoxUserDatPaths.Items.Add(file);
-            }
+            listBoxUserDatPaths.DataSource = null;
+            listBoxUserDatPaths.DataSource = files;
+            listBoxUserDatPaths.DisplayMember = "Display";
+            listBoxUserDatPaths.Update();
         }
 
         private void listBoxUserDatPaths_DoubleClick(object sender, EventArgs e)
         {
-            var profilePath = listBoxUserDatPaths.SelectedItem?.ToString();
-            if (profilePath == null)
+            var selectedDatFile = listBoxUserDatPaths.SelectedItem as UserDatFound;
+            if (selectedDatFile == null)
             {
                 return;
             }
 
-            var newForm = new frmProbeFormationSelector(profilePath);
+            var newForm = new frmProbeFormationSelector(selectedDatFile);
             newForm.Show();
 
             newForm.FormClosed += (o, args) => { 

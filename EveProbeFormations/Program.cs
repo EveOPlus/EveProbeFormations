@@ -22,6 +22,8 @@ namespace EveProbeFormations
                 return;
             }
 
+            Helper.LoadSettings();
+
             Application.Run(new frmProfileSelector());
         }
     }

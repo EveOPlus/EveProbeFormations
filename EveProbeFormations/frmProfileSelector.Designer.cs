@@ -58,7 +58,7 @@
             listBoxUserDatPaths.FormattingEnabled = true;
             listBoxUserDatPaths.Location = new Point(3, 43);
             listBoxUserDatPaths.Name = "listBoxUserDatPaths";
-            listBoxUserDatPaths.Size = new Size(985, 530);
+            listBoxUserDatPaths.Size = new Size(731, 530);
             listBoxUserDatPaths.TabIndex = 2;
             listBoxUserDatPaths.DoubleClick += listBoxUserDatPaths_DoubleClick;
             // 
@@ -74,7 +74,7 @@
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(991, 576);
+            tableLayoutPanel1.Size = new Size(737, 576);
             tableLayoutPanel1.TabIndex = 3;
             // 
             // tableLayoutPanel2
@@ -89,7 +89,7 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(985, 34);
+            tableLayoutPanel2.Size = new Size(731, 34);
             tableLayoutPanel2.TabIndex = 3;
             // 
             // panel2
@@ -98,7 +98,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(3, 3);
             panel2.Name = "panel2";
-            panel2.Size = new Size(802, 28);
+            panel2.Size = new Size(548, 28);
             panel2.TabIndex = 2;
             // 
             // label1
@@ -115,7 +115,7 @@
             panel1.Controls.Add(btnSettingsFolderPicker);
             panel1.Controls.Add(btnRefreshSettingsPath);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(811, 3);
+            panel1.Location = new Point(557, 3);
             panel1.Name = "panel1";
             panel1.Size = new Size(171, 28);
             panel1.TabIndex = 1;
@@ -134,7 +134,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(991, 576);
+            ClientSize = new Size(737, 576);
             Controls.Add(tableLayoutPanel1);
             Name = "frmProfileSelector";
             Text = "Select User Profile";

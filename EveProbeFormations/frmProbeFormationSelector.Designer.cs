@@ -33,12 +33,14 @@
             btnAddSegment = new Button();
             btnDelete = new Button();
             btnExport = new Button();
+            lblAlias = new Label();
+            txtAlias = new TextBox();
             SuspendLayout();
             // 
             // listBoxSavedFormations
             // 
             listBoxSavedFormations.FormattingEnabled = true;
-            listBoxSavedFormations.Location = new Point(12, 39);
+            listBoxSavedFormations.Location = new Point(12, 65);
             listBoxSavedFormations.Name = "listBoxSavedFormations";
             listBoxSavedFormations.SelectionMode = SelectionMode.MultiExtended;
             listBoxSavedFormations.Size = new Size(158, 259);
@@ -48,7 +50,7 @@
             // lblProfilePath
             // 
             lblProfilePath.AutoSize = true;
-            lblProfilePath.Location = new Point(17, 13);
+            lblProfilePath.Location = new Point(12, 9);
             lblProfilePath.Name = "lblProfilePath";
             lblProfilePath.Size = new Size(44, 15);
             lblProfilePath.TabIndex = 1;
@@ -56,7 +58,7 @@
             // 
             // btnAddSegment
             // 
-            btnAddSegment.Location = new Point(12, 333);
+            btnAddSegment.Location = new Point(12, 359);
             btnAddSegment.Name = "btnAddSegment";
             btnAddSegment.Size = new Size(156, 23);
             btnAddSegment.TabIndex = 2;
@@ -66,7 +68,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(12, 362);
+            btnDelete.Location = new Point(12, 388);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(156, 23);
             btnDelete.TabIndex = 3;
@@ -76,7 +78,7 @@
             // 
             // btnExport
             // 
-            btnExport.Location = new Point(12, 304);
+            btnExport.Location = new Point(12, 330);
             btnExport.Name = "btnExport";
             btnExport.Size = new Size(156, 23);
             btnExport.TabIndex = 4;
@@ -84,11 +86,30 @@
             btnExport.UseVisualStyleBackColor = true;
             btnExport.Click += btnExport_Click;
             // 
+            // lblAlias
+            // 
+            lblAlias.AutoSize = true;
+            lblAlias.Location = new Point(12, 33);
+            lblAlias.Name = "lblAlias";
+            lblAlias.Size = new Size(35, 15);
+            lblAlias.TabIndex = 5;
+            lblAlias.Text = "Alias:";
+            // 
+            // txtAlias
+            // 
+            txtAlias.Location = new Point(53, 30);
+            txtAlias.Name = "txtAlias";
+            txtAlias.Size = new Size(115, 23);
+            txtAlias.TabIndex = 6;
+            txtAlias.LostFocus += txtAlias_LostFocus;
+            // 
             // frmProbeFormationSelector
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(182, 397);
+            ClientSize = new Size(187, 426);
+            Controls.Add(txtAlias);
+            Controls.Add(lblAlias);
             Controls.Add(btnExport);
             Controls.Add(btnDelete);
             Controls.Add(btnAddSegment);
@@ -107,5 +128,7 @@
         private Button btnAddSegment;
         private Button btnDelete;
         private Button btnExport;
+        private Label lblAlias;
+        private TextBox txtAlias;
     }
 }

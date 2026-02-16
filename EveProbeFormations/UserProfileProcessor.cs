@@ -6,6 +6,7 @@ namespace EveProbeFormations
 {
     public class UserProfileProcessor
     {
+        public string? UserId { get; set; }
         public string PathToUserProfile { get; set; }
 
         /// <summary>
@@ -23,6 +24,12 @@ namespace EveProbeFormations
         public UserProfileProcessor(string pathToUserProfile)
         {
             PathToUserProfile = pathToUserProfile;
+
+            if (Helper.TryFindUserIdInFileName(PathToUserProfile, out string userId))
+            {
+                UserId = userId;
+            }
+
             ParseFile();
         }
 

@@ -10,6 +10,65 @@ namespace EveProbeFormations
     {
         public static bool RunningInUnlockedMode = false;
 
+        public const string SettingsFileName = "settings.json";
+        public static Settings Settings = new Settings();
+
+        public static bool TryFindUserAlias(string userId, out string alias)
+        {
+            alias = string.Empty;
+            var matchingAlias = Settings.Aliases.FirstOrDefault(x => x.UserId == userId)?.Alias;
+
+            alias = matchingAlias ?? string.Empty;
+            return !string.IsNullOrEmpty(alias);
+        }
+
+        public static bool TryFindUserIdInFileName(string fileName, out string userId)
+        {
+            userId = string.Empty;
+            try 
+            {
+                var prefix = "core_user_";
+                var index = fileName.IndexOf(prefix);
+                if (index < 0)
+                {
+                    return false;
+                }
+
+                var ss = fileName.Substring(index + prefix.Length, fileName.Length - prefix.Length - index);
+                var firstNumbers = new string(ss.TakeWhile(char.IsNumber).ToArray());
+                userId = firstNumbers;
+
+                return true;
+            }
+            catch 
+            {
+                return false;
+            } 
+        }
+
+        public static void LoadSettings() 
+        {
+            try 
+            {
+                var settingContent = File.ReadAllText(SettingsFileName);
+                var newSettings = JsonConvert.DeserializeObject<Settings>(settingContent);
+
+                if (newSettings != null)
+                {
+                    Settings = newSettings;
+                }
+            }
+            catch 
+            {
+                SaveSettings();
+            }
+        }
+
+        public static void SaveSettings()
+        {
+            File.WriteAllText(SettingsFileName, JsonConvert.SerializeObject(Settings, Formatting.Indented));
+        }
+
         public static string? TryToFindPathToLocalEve()
         {
             try
@@ -28,14 +87,36 @@ namespace EveProbeFormations
             }
         }
 
-        public static List<string> GetUserDatFiles(string settingsFolderPath)
+        public static List<UserDatFound> GetUserDatFiles(string settingsFolderPath)
         {
-            var result = new List<string>();
+            var result = new List<UserDatFound>();
             if (Directory.Exists(settingsFolderPath))
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(settingsFolderPath);
                 FileInfo[] files = directoryInfo.GetFiles("core_user_*.dat");
-                result.AddRange(files.OrderByDescending(x => x.LastWriteTime).Select(x => x.FullName));
+                foreach (FileInfo file in files)
+                {
+                    var newFoundDat = new UserDatFound();
+                    newFoundDat.FilePath = file.FullName;
+                    newFoundDat.LastModified = file.LastWriteTime;
+
+                    if (Helper.TryFindUserIdInFileName(file.FullName, out string userId)) 
+                    {
+                        newFoundDat.UserId = userId;
+                    }
+
+                    if (newFoundDat.UserId != null && Helper.TryFindUserAlias(newFoundDat.UserId, out string alias))
+                    {
+                        newFoundDat.UserAlias = alias;
+                    }
+
+                    if (newFoundDat.FileName == "core_user__.dat")
+                    {
+                        continue;
+                    }
+
+                    result.Add(newFoundDat);
+                }
             }
 
             var subFolders = Directory.GetDirectories(settingsFolderPath);
@@ -53,7 +134,7 @@ namespace EveProbeFormations
                 }
             }
 
-            return result;
+            return result.OrderByDescending(x => x.LastModified).ToList();
         }
 
         public static bool Like(this double myDouble, double comparisonValue)
@@ -210,6 +291,25 @@ namespace EveProbeFormations
             catch { }
 
             return null;
+        }
+
+        public static void UpdateUserAlias(string userId, string newAlias)
+        {
+            var existingAliasSetting = Settings.Aliases.FirstOrDefault(x => x.UserId == userId);
+            if (existingAliasSetting != null && newAlias != existingAliasSetting.Alias)
+            {
+                existingAliasSetting.Alias = newAlias;
+            }
+            else 
+            {
+                Settings.Aliases.Add(new UserAlias
+                { 
+                    UserId = userId,
+                    Alias = newAlias
+                });
+            }
+
+            SaveSettings();
         }
     }
 }
