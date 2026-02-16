@@ -40,6 +40,11 @@ namespace EveProbeFormations
 
         private void listBoxSavedFormations_DoubleClick(object sender, EventArgs e)
         {
+            if (listBoxSavedFormations.SelectedItems.Count > 1)
+            {
+                return;
+            }
+
             if (listBoxSavedFormations.SelectedItem == null)
             {
                 MessageBox.Show("Please select a formation to edit.");
@@ -65,9 +70,20 @@ namespace EveProbeFormations
             }
 
             var blob = Clipboard.GetText();
-            var importedFormation = Helper.ImportBlobCipher(blob);
+            var importedFormations = Helper.DecypherImportedBlob(blob);
 
-            UserProfileProcessor.FormationSegments.Add(importedFormation);
+            if (importedFormations == null || importedFormations.Length < 1)
+            { 
+                MessageBox.Show("Could not locate any formations in your clipboard. Please make sure you have copied a valid formation and try again.");
+                return;
+            }
+
+            if (UserProfileProcessor.FormationSegments.Count + importedFormations.Length > 10)
+            { 
+                MessageBox.Show($"Importing these formations would exceed the maximum of 10 formations per profile. Please make sure there is enough slots to import {importedFormations.Length} new formations and try again.");
+            }
+
+            UserProfileProcessor.FormationSegments.AddRange(importedFormations);
             UpdateListBox();
 
             UserProfileProcessor.CleanUpOrder();
@@ -110,8 +126,25 @@ namespace EveProbeFormations
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            var selectedFormation = (FormationSegment)listBoxSavedFormations.SelectedItem;
-            Clipboard.SetText(Helper.GenerateExportBlob(selectedFormation));
+            if (listBoxSavedFormations.SelectedItems.Count > 9)
+            { 
+                MessageBox.Show("You cannot export more than 9 formations at once.");
+                return;
+            }
+
+            if (listBoxSavedFormations.SelectedItems.Count < 2)
+            {
+                MessageBox.Show("You must select at least one formation to export.");
+                return;
+            }
+
+            var selectedFormations = new List<FormationSegment>();
+            foreach (FormationSegment formation in listBoxSavedFormations.SelectedItems)
+            {
+                selectedFormations.Add(formation);
+            }
+
+            Clipboard.SetText(Helper.GenerateExportBlobs(selectedFormations));
 
             MessageBox.Show("Formation copied to clipboard!");
         }

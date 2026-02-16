@@ -90,6 +90,35 @@ namespace EveProbeFormations
             return lines;
         }
 
+        public static string GenerateExportBlobs(IEnumerable<FormationSegment> theSegmentsToExport)
+        {
+            var cloneJson = JsonConvert.SerializeObject(theSegmentsToExport, Formatting.Indented);
+            var clone = JsonConvert.DeserializeObject<List<FormationSegment>>(cloneJson);
+
+            foreach (var segment in clone)
+            {
+                segment?.Probes.RemoveAll(p => !p.IsValid);
+            }
+
+            var json = JsonConvert.SerializeObject(clone, Formatting.Indented);
+
+            var cipherText = CryptoHelper.Encrypt(json);
+
+            var result = new StringBuilder();
+            var formationNames = string.Join(", ", theSegmentsToExport.Select(s => s.FormationName));
+            var header = $"=== Eve Probe Fromations ({formationNames}) ===";
+            result.AppendLine(header);
+
+            foreach (var line in cipherText.SplitLines(header.Length))
+            {
+                result.AppendLine(line);
+            }
+
+            result.AppendLine(new string(header.Select(x => '=').ToArray()));
+
+            return result.ToString();
+        }
+
         public static string GenerateExportBlob(FormationSegment theSegmentToExport)
         {
             var cloneJson = JsonConvert.SerializeObject(theSegmentToExport, Formatting.Indented);
@@ -114,7 +143,7 @@ namespace EveProbeFormations
             return result.ToString();
         }
 
-        public static FormationSegment ImportBlobCipher(string exportedCipherBlob)
+        public static FormationSegment[]? DecypherImportedBlob(string exportedCipherBlob)
         {
             exportedCipherBlob = exportedCipherBlob.Trim();
             string[] lines = exportedCipherBlob.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
@@ -137,7 +166,15 @@ namespace EveProbeFormations
 
             var json = CryptoHelper.Decrypt(cipherText);
 
-            return JsonConvert.DeserializeObject<FormationSegment>(json);
+            if (json.Trim().StartsWith("["))
+            { 
+                return JsonConvert.DeserializeObject<FormationSegment[]>(json);
+            }
+            else
+            {
+                var singleResult = JsonConvert.DeserializeObject<FormationSegment>(json);
+                return singleResult == null ? null : [singleResult];
+            }
         }
 
         public static bool Like(this byte[] arrayA, byte[] arrayB)
@@ -156,6 +193,42 @@ namespace EveProbeFormations
             }
 
             return true;
+        }
+
+        public static DateTime? GetApproximateInternetTime()
+        {
+            try
+            {
+                var url = "https://esi.evetech.net/status";
+                using (var client = new HttpClient())
+                {
+                    var response = client.GetAsync(url).GetAwaiter().GetResult();
+                    if (response.Headers.Date.HasValue)
+                    { 
+                        return response.Headers.Date.Value.DateTime;
+                    }
+
+                    var json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    var jsonObj = JsonConvert.DeserializeObject<dynamic>(json);
+                    DateTime dateTime = jsonObj.start_time;
+                    return dateTime;
+                }
+            }
+            catch { }
+
+            try
+            {
+                var url = "https://developers.eveonline.com/";
+                using (var client = new HttpClient())
+                {
+                    var response = client.GetAsync(url).GetAwaiter().GetResult();
+                    DateTimeOffset responseDate = response.Headers.Date.Value;
+                    return responseDate.DateTime;
+                }
+            }
+            catch { }
+
+            return null;
         }
     }
 }

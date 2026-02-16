@@ -40,6 +40,7 @@
             listBoxSavedFormations.FormattingEnabled = true;
             listBoxSavedFormations.Location = new Point(12, 39);
             listBoxSavedFormations.Name = "listBoxSavedFormations";
+            listBoxSavedFormations.SelectionMode = SelectionMode.MultiExtended;
             listBoxSavedFormations.Size = new Size(158, 259);
             listBoxSavedFormations.TabIndex = 0;
             listBoxSavedFormations.DoubleClick += listBoxSavedFormations_DoubleClick;

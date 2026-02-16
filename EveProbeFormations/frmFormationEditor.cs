@@ -216,7 +216,14 @@ namespace EveProbeFormations
         private void btnImport_Click(object sender, EventArgs e)
         {
             var blob = Clipboard.GetText();
-            var importedFormation = Helper.ImportBlobCipher(blob);
+            var importedFormations = Helper.DecypherImportedBlob(blob);
+
+            if (importedFormations == null || importedFormations.Length < 1)
+            {
+                return;
+            }
+
+            var importedFormation = importedFormations[0];
 
             if (importedFormation == null)
             {
