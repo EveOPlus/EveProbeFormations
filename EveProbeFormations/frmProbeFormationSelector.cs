@@ -95,22 +95,32 @@ namespace EveProbeFormations
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (UserProfileProcessor.FormationSegments.Count == 1)
+            var selectedFormations = new List<FormationSegment>();
+
+            foreach (FormationSegment item in listBoxSavedFormations.SelectedItems)
+            {
+                selectedFormations.Add(item);
+            }
+
+            if (selectedFormations == null || selectedFormations.Count < 2)
+            {
+                return;
+            }
+
+            if (UserProfileProcessor.FormationSegments.Count - selectedFormations.Count < 1)
             {
                 MessageBox.Show("You must have at least one formation in your profile.");
                 return;
             }
 
-            var selectedFormation = listBoxSavedFormations.SelectedItem as FormationSegment;
-            if (selectedFormation == null)
-            {
-                return;
-            }
-
-            DialogResult dialogResult = MessageBox.Show($"Are you sure you want to delete \"{selectedFormation.FormationName}\"?", "Delete Fromation", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show($"Are you sure you want to delete {selectedFormations.Count} formation(s)?", "Delete Fromations", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                UserProfileProcessor.FormationSegments.Remove(selectedFormation);
+                foreach (FormationSegment item in selectedFormations)
+                {
+                    UserProfileProcessor.FormationSegments.Remove(item);
+                }
+
                 UpdateListBox();
 
                 UserProfileProcessor.CleanUpOrder();
@@ -132,7 +142,7 @@ namespace EveProbeFormations
                 return;
             }
 
-            if (listBoxSavedFormations.SelectedItems.Count < 2)
+            if (listBoxSavedFormations.SelectedItems.Count < 1)
             {
                 MessageBox.Show("You must select at least one formation to export.");
                 return;

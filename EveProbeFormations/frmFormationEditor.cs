@@ -208,7 +208,7 @@ namespace EveProbeFormations
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(Helper.GenerateExportBlob(SelectedFormation));
+            Clipboard.SetText(Helper.GenerateExportBlobs(new List<FormationSegment> { SelectedFormation }));
 
             MessageBox.Show("Formation copied to clipboard!");
         }

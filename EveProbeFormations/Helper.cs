@@ -119,30 +119,6 @@ namespace EveProbeFormations
             return result.ToString();
         }
 
-        public static string GenerateExportBlob(FormationSegment theSegmentToExport)
-        {
-            var cloneJson = JsonConvert.SerializeObject(theSegmentToExport, Formatting.Indented);
-            var clone = JsonConvert.DeserializeObject<FormationSegment>(cloneJson);
-            clone?.Probes.RemoveAll(p => !p.IsValid);
-
-            var json = JsonConvert.SerializeObject(clone, Formatting.Indented);
-
-            var cipherText = CryptoHelper.Encrypt(json);
-
-            var result = new StringBuilder();
-            var header = $"=== Eve Probe Fromation ({theSegmentToExport.FormationName}) ===";
-            result.AppendLine(header);
-
-            foreach (var line in cipherText.SplitLines(header.Length))
-            {
-                result.AppendLine(line);
-            }
-
-            result.AppendLine(new string(header.Select(x => '=').ToArray()));
-
-            return result.ToString();
-        }
-
         public static FormationSegment[]? DecypherImportedBlob(string exportedCipherBlob)
         {
             exportedCipherBlob = exportedCipherBlob.Trim();
@@ -173,8 +149,13 @@ namespace EveProbeFormations
             else
             {
                 var singleResult = JsonConvert.DeserializeObject<FormationSegment>(json);
-                return singleResult == null ? null : [singleResult];
+                if (singleResult != null)
+                {
+                    MessageBox.Show("Detected an old format which is no longer supported.");
+                }
             }
+
+            return null;
         }
 
         public static bool Like(this byte[] arrayA, byte[] arrayB)
